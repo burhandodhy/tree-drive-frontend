@@ -56,7 +56,7 @@ export const loadUser = () => (dispatch, getState) => {
   }
 
   axios
-    .get(`${API_URL}user-login/`, config)
+    .get(`${API_URL}user-data/`, config)
     .then(res => {
       dispatch({
         type: USER_LOADED,
