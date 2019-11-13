@@ -2,22 +2,24 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/posts";
 import PostCard from "../layout/PostCard";
-import PostPagination from "../layout/PostPagination"
+import PostPagination from "../layout/PostPagination";
+import Loader from "../common/Loader";
 
 class Posts extends Component {
-  componentDidMount() {
+  
+  constructor(props) {
+    super(props);
     this.props.getPosts();
   }
 
   paginatePost = (event, pageNo) => {
     event.preventDefault();
     this.props.getPosts(pageNo);
-  }
+  };
 
   render() {
- 
-    if (this.props.posts.results) {
-      const {next, previous, current} = this.props.posts.pages
+    if (!this.props.isLoading) {
+      const { next, previous, current } = this.props.posts.pages;
       let html = this.props.posts.results.map((post, key) => {
         return <PostCard key={key} post={post} />;
       });
@@ -33,17 +35,14 @@ class Posts extends Component {
           />
         </div>
       );
-        
     } else {
-      return "Loading";
+      return <Loader />;
     }
   }
 }
 
 const mapStateToProps = state => ({
   posts: state.posts.all_posts,
+  isLoading: state.posts.isLoading
 });
-export default connect(
-  mapStateToProps,
-  { getPosts }
-)(Posts);
+export default connect(mapStateToProps, { getPosts })(Posts);

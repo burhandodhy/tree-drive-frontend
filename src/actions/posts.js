@@ -2,13 +2,14 @@ import axios from "axios";
 import {
   GET_POSTS_SUCCESS,
   GET_SINGLE_POST_SUCCESS,
-  GET_SINGLE_POST_ERROR
+  GET_SINGLE_POST_ERROR,
+  POST_LOADING
 } from "../actionTypes/posts";
 
 import { createMessage, createError } from "../actions/messages";
 import { API_URL } from "../config";
 
-export const getPosts = (pageNo) => dispatch => {
+export const getPosts = pageNo => dispatch => {
   // Header
   const config = {
     headers: {
@@ -17,10 +18,11 @@ export const getPosts = (pageNo) => dispatch => {
   };
 
   let url = `${API_URL}post/`;
-  if(pageNo){
+  if (pageNo) {
     url += `?page=${pageNo}`;
   }
-  
+
+  dispatch({ type: POST_LOADING });
   axios.get(url, "", config).then(response => {
     dispatch({
       type: GET_POSTS_SUCCESS,
@@ -37,6 +39,7 @@ export const getSinglePost = id => dispatch => {
     }
   };
 
+  dispatch({ type: POST_LOADING }); 
   axios
     .get(`${API_URL}post/${id}`, "", config)
     .then(response => {
@@ -70,7 +73,6 @@ export const likePost = id => dispatch => {
       dispatch(createError(error.response.data, error.response.status));
     });
 };
-
 
 export const dislikePost = id => dispatch => {
   // Header

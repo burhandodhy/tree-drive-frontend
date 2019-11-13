@@ -135,7 +135,7 @@ export const userRegistration = state => dispatch => {
       dispatch(createMessage({ success: "Registration Successfully" }));
     })
     .catch(error => {
-      error = Object.keys(error.response.data).map((key, index) => {
+      error = Object.keys(error.response.data).forEach((key) => {
         dispatch(createError(error.response.data[key][0], key));
       });
     });
