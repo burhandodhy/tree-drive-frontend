@@ -64,7 +64,7 @@ class SinglePost extends Component {
 
                 <div className="card mb-4">
                   <img className="card-img-top" src={feature_image} alt="" />
-                  <div className="caisLoadingrd-body">
+                  <div className="card-body">
                     <p className="card-text">{content}</p>
                   </div>
 

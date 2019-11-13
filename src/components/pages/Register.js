@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { userRegistration } from "../../actions/auth";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 class Register extends Component {
   state = {
@@ -17,6 +18,11 @@ class Register extends Component {
     zip_code: ""
   };
 
+  static propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired
+  };
+
   onSubmit = e => {
     e.preventDefault();
     this.props.userRegistration(this.state);
@@ -25,7 +31,6 @@ class Register extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-
     const { isLoading, isAuthenticated } = this.props;
 
     if (isAuthenticated) {

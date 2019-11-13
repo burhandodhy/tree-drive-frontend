@@ -4,13 +4,18 @@ import { getPosts } from "../../actions/posts";
 import PostCard from "../layout/PostCard";
 import PostPagination from "../layout/PostPagination";
 import Loader from "../common/Loader";
+import { PropTypes } from "prop-types";
 
 class Posts extends Component {
-  
   constructor(props) {
     super(props);
     this.props.getPosts();
   }
+
+  static propTypes = {
+    posts: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired
+  };
 
   paginatePost = (event, pageNo) => {
     event.preventDefault();

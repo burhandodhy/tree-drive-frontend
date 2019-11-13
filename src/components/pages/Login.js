@@ -12,7 +12,8 @@ class Login extends Component {
 
   static propTypes = {
     login: PropTypes.object,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    isLoading: PropTypes.bool.isRequired
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -23,7 +24,6 @@ class Login extends Component {
   };
 
   render() {
-
     const { isLoading, isAuthenticated } = this.props;
     if (isAuthenticated) {
       return <Redirect to="/" />;

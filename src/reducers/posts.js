@@ -6,7 +6,7 @@ import {
 } from "../actionTypes/posts";
 
 const intialState = {
-  all_posts: [],
+  all_posts: {},
   post: {},
   error: {},
   isLoading: true

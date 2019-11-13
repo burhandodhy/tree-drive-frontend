@@ -6,7 +6,8 @@ import Loader from "../common/Loader";
 
 class Profile extends Component {
   static propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    isLoading: PropTypes.bool.isRequired
   };
 
   state = {
@@ -60,8 +61,8 @@ class Profile extends Component {
   render() {
     const { isLoading } = this.props;
 
-    if ( isLoading ) {
-      return <Loader/>
+    if (isLoading) {
+      return <Loader />;
     } else {
       return (
         <div>
