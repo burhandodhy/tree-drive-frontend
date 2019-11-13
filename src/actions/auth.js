@@ -6,7 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
 } from "../actionTypes/auth";
 
 import { API_URL } from "../config";
@@ -19,6 +20,7 @@ export const userLogin = (username, password) => dispatch => {
     headers: { "X-CSRFToken": getCookie("csrftoken") }
   });
 
+  dispatch({ type: USER_LOADING });
   request
     .post(`${API_URL}login/`, {
       username: username,
@@ -110,6 +112,7 @@ export const userRegistration = state => dispatch => {
     zip_code
   } = state;
 
+  dispatch({ type: USER_LOADING });
   const request = axios.create({
     headers: { "X-CSRFToken": getCookie("csrftoken") }
   });
@@ -135,6 +138,7 @@ export const userRegistration = state => dispatch => {
       dispatch(createMessage({ success: "Registration Successfully" }));
     })
     .catch(error => {
+      dispatch({ type: REGISTER_FAIL });
       error = Object.keys(error.response.data).forEach((key) => {
         dispatch(createError(error.response.data[key][0], key));
       });

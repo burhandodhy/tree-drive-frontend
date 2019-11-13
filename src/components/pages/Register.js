@@ -25,9 +25,19 @@ class Register extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    if (this.props.isAuthenticated) {
+
+    const { isLoading, isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
       return <Redirect to="/" />;
     }
+    const loader = isLoading ? (
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    ) : (
+      ""
+    );
     return (
       <div>
         <h1>Register</h1>
@@ -146,9 +156,14 @@ class Register extends Component {
               onChange={this.onChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isLoading}
+          >
             Submit
           </button>
+          {loader}
         </form>
       </div>
     );
@@ -156,7 +171,8 @@ class Register extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.auth.isLoading
 });
 export default connect(
   mapStateToProps,

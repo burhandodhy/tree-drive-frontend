@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import { userLogin } from "../../actions/auth"; 
+import { userLogin } from "../../actions/auth";
 
 class Login extends Component {
   state = {
     username: "",
-    password: "",
+    password: ""
   };
 
   static propTypes = {
@@ -23,9 +23,20 @@ class Login extends Component {
   };
 
   render() {
-    if (this.props.isAuthenticated) {
+
+    const { isLoading, isAuthenticated } = this.props;
+    if (isAuthenticated) {
       return <Redirect to="/" />;
-    }    
+    }
+
+    const loader = isLoading ? (
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    ) : (
+      ""
+    );
+
     return (
       <div>
         <h1>Login</h1>
@@ -53,9 +64,14 @@ class Login extends Component {
             />
           </div>
           <div>{this.state.error_message}</div>
-          <button type="submit" className="btn btn-primary" >
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isLoading}
+          >
             Submit
           </button>
+          {loader}
         </form>
       </div>
     );
@@ -65,8 +81,6 @@ class Login extends Component {
 const mapStateToProps = state => ({
   login: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.auth.isLoading
 });
-export default connect(
-  mapStateToProps,
-  { userLogin }
-)(Login);
+export default connect(mapStateToProps, { userLogin })(Login);
