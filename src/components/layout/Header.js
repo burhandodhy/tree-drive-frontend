@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logOutUser } from "../../actions/auth";
@@ -16,19 +16,19 @@ class Header extends Component {
     const guestLinks = (
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
         <li className="nav-item">
-          <Link to="/blog" className="nav-link">
+          <NavLink to="/blog" className="nav-link">
             Blogs
-          </Link>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <Link to="/login" className="nav-link">
+          <NavLink to="/login" className="nav-link">
             Login
-          </Link>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <Link to="/register" className="nav-link">
+          <NavLink to="/register" className="nav-link">
             Register
-          </Link>
+          </NavLink>
         </li>
       </ul>
     );
@@ -39,9 +39,14 @@ class Header extends Component {
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
         <li className="nav-item">
-          <Link to="/profile" className="nav-link">
+          <NavLink to="/blog" className="nav-link">
+            Blogs
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink to="/profile" className="nav-link">
             Profile
-          </Link>
+          </NavLink>
         </li>
         <li className="nav-item">
           <button
@@ -56,9 +61,9 @@ class Header extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link to="/" className="navbar-brand">
+        <NavLink to="/" className="navbar-brand">
           Plant Drive
-        </Link>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
