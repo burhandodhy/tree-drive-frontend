@@ -3,7 +3,7 @@ import React from "react";
 function PostCard(props) {
  
   return (
-    <div className="card mb-4 col-5" >
+    <div className="card mb-4 col-5">
       <img className="card-img-top" src={props.post.feature_image} alt="" />
       <div className="card-body">
         <h2 className="card-title">{props.post.title}</h2>
@@ -13,7 +13,7 @@ function PostCard(props) {
         </a>
       </div>
       <div className="card-footer text-muted">
-        Posted on {props.post.created_on} by {props.post.author}
+        Posted on {props.post.created} by {props.post.author}
       </div>
     </div>
   );

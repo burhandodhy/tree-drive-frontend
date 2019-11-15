@@ -46,7 +46,7 @@ class SinglePost extends Component {
       feature_image,
       author,
       content,
-      created_on,
+      created,
       gallery
     } = this.props.post; 
     
@@ -106,7 +106,7 @@ class SinglePost extends Component {
                   </div>
 
                   <div className="card-footer text-muted">
-                    Posted on {created_on} by {author}
+                    Posted on {created} by {author}
                   </div>
                 </div>
               </div>
