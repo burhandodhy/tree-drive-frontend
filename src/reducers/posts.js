@@ -17,8 +17,10 @@ export default function(state = intialState, action) {
     case POST_LOADING:
       return {
         ...state,
-        isLoading: true
-      }
+        isLoading: true,
+        all_posts: {},
+        post:{}
+      };
     case GET_POSTS_SUCCESS:
       return {
         ...state,

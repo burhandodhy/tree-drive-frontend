@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import Loader from "../common/Loader";
 
 class SinglePost extends Component {
+ 
   static propTypes = {
     post: PropTypes.object.isRequired,
     error: PropTypes.object.isRequired,
@@ -46,16 +47,25 @@ class SinglePost extends Component {
       author,
       content,
       created_on,
-      gallery_image_1,
-      gallery_image_2
-    } = this.props.post;
-
-    const images = [gallery_image_1, gallery_image_2]; 
+      gallery
+    } = this.props.post; 
     
-    if (!this.props.isLoading) {
+    if (!this.props.isLoading && Object.entries(this.props.post).length > 0) {
       if (this.props.error.detail) {
         return <Error error={this.props.error.detail} />;
       } else {
+        const gallery_html = gallery.map((val, index) => {
+          return (
+            <div className="col-lg-3 col-md-4 col-6" key={index}>
+              <img
+                onClick={() => this.setState({ isOpen: true })}
+                className="img-fluid img-thumbnail"
+                src={val.image}
+                alt=""
+              />
+            </div>
+          );
+        });
         return (
           <React.Fragment>
             <div className="row">
@@ -74,24 +84,7 @@ class SinglePost extends Component {
                         Gallery
                       </h4>
                     </div>
-
-                    <div className="col-lg-3 col-md-4 col-6">
-                      <img
-                        onClick={() => this.setState({ isOpen: true })}
-                        className="img-fluid img-thumbnail"
-                        src={gallery_image_1}
-                        alt=""
-                      />
-                    </div>
-
-                    <div className="col-lg-3 col-md-4 col-6">
-                      <img
-                        onClick={() => this.setState({ isOpen: true })}
-                        className="img-fluid img-thumbnail"
-                        src={gallery_image_2}
-                        alt=""
-                      />
-                    </div>
+                    {gallery_html}
                   </div>
                   <hr className="my-4"></hr>
 
@@ -121,20 +114,22 @@ class SinglePost extends Component {
 
             {isOpen && (
               <Lightbox
-                mainSrc={images[photoIndex]}
-                nextSrc={images[(photoIndex + 1) % images.length]}
+                mainSrc={gallery[photoIndex].image}
+                nextSrc={gallery[(photoIndex + 1) % gallery.length].image}
                 prevSrc={
-                  images[(photoIndex + images.length - 1) % images.length]
+                  gallery[(photoIndex + gallery.length - 1) % gallery.length]
+                    .image
                 }
                 onCloseRequest={() => this.setState({ isOpen: false })}
                 onMovePrevRequest={() =>
                   this.setState({
-                    photoIndex: (photoIndex + images.length - 1) % images.length
+                    photoIndex:
+                      (photoIndex + gallery.length - 1) % gallery.length
                   })
                 }
                 onMoveNextRequest={() =>
                   this.setState({
-                    photoIndex: (photoIndex + 1) % images.length
+                    photoIndex: (photoIndex + 1) % gallery.length
                   })
                 }
               />
@@ -143,16 +138,25 @@ class SinglePost extends Component {
         );
       }
     } else {
-      return <Loader/>;
+      return <Loader />;
     }
   }
 }
 
-const mapStateToProps = state => ({
-  post: state.posts.post,
-  error: state.posts.error,
-  isLoading: state.posts.isLoading
-});
+// const mapStateToProps = state => ({
+//   post: state.posts.post,
+//   error: state.posts.error,
+//   isLoading: state.posts.isLoading
+// });
+
+const mapStateToProps = state => {
+  return {
+    post: state.posts.post,
+      error: state.posts.error,
+      isLoading: state.posts.isLoading
+  };
+};
+
 export default connect(mapStateToProps, {
   getSinglePost,
   likePost,

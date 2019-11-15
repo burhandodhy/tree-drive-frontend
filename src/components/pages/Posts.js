@@ -23,7 +23,7 @@ class Posts extends Component {
   };
 
   render() {
-    if (!this.props.isLoading) {
+    if (!this.props.isLoading && Object.entries(this.props.posts).length > 0) {
       const { next, previous, current } = this.props.posts.pages;
       let html = this.props.posts.results.map((post, key) => {
         return <PostCard key={key} post={post} />;

@@ -65,9 +65,9 @@ export const likePost = id => dispatch => {
   };
 
   axios
-    .get(`${API_URL}post/${id}/like`, "", config)
+    .get(`${API_URL}post/${id}/up-vote`, "", config)
     .then(response => {
-      dispatch(createMessage({ success: "Liked" }));
+      dispatch(createMessage({ success: "Up Voted!" }));
     })
     .catch(error => {
       dispatch(createError(error.response.data, error.response.status));
@@ -83,9 +83,9 @@ export const dislikePost = id => dispatch => {
   };
 
   axios
-    .get(`${API_URL}post/${id}/dislike`, "", config)
+    .get(`${API_URL}post/${id}/down-vote`, "", config)
     .then(response => {
-      dispatch(createMessage({ success: "Disliked" }));
+      dispatch(createMessage({ success: "Down Voted!" }));
     })
     .catch(error => {
       dispatch(createError(error.response.data, error.response.status));
